@@ -1,31 +1,45 @@
-Background
-====
-```
-➜  cp-tests  ls /Users/kracekumarramaraju/code
-SlideshareAPIExamples        hacknight                    mongrel2
-bangalore.python.org.in      hasgeek-vagrant              offline-python
-baseframe                    hasgeek.tv                   peopleflow
-brubeck                      hasgeek_vagrant              py-photo-organiser-read-only
-coaster                      hasjob                       schematics
-flask-lastuser               imgee                        snippets
-flow                         kuviyal                      test-empythoned
-go-instagram                 libev                        tumblr
-go-photo-organizer           limechat                     veewee-raring64
-```
+I was wondering how much will be the speed difference between cp command, rsync and implementation in python, go, lua and so wrote this code. More [cp-command-implementation-and-benchmark-in-python-go](http://kracekumar.com/post/53685731325/cp-command-implementation-and-benchmark-in-python-go)
 
 Results
-=====
-1. python cp.py /Users/kracekumarramaraju/code Volumes/My Passport/test/5
-    Files copied from /Users/kracekumarramaraju/code to /Volumes/My Passport/test/5 in 207.005456 seconds
-    
-2. python cp-gevent.py /Users/kracekumarramaraju/code /Volumes/My\ Passport/test/4
-    Files copied from /Users/kracekumarramaraju/code to /Volumes/My Passport/test/4 in 211.607707 seconds
+===
+    ➜  cp-tests  ./test.sh
+    source directory size
+    300M    /Users/kracekumarramaraju/code
+    cp.py - Python without gevent
 
-3. time cp -R /Users/kracekumarramaraju/code /Volumes/My\ Passport/test/7
-    sent 1.20G bytes  received 438.41K bytes  4.47M bytes/sec
-    total size is 1.20G  speedup is 1.00
-    rsync --progress -ah -R /Users/kracekumarramaraju/code   9.00s user 20.80s system 10% cpu 4:56.90 total
+    real    1m23.354s
+    user    0m1.818s
+    sys     0m5.032s
+    302M    /Volumes/My Passport/test/1
+    cp-gevent.py - Python with gevent
 
-4. time /bin/cp -R /Users/kracekumarramaraju/code /Volumes/My\ Passport/test/9
-/bin/cp -R /Users/kracekumarramaraju/code /Volumes/My\ Passport/test/9  0.60s user 16.22s system 4% cpu 6:11.24 total
+    real    1m24.212s
+    user    0m1.772s
+    sys     0m4.748s
+    302M    /Volumes/My Passport/test/2
+    alias cp='rsync --progress -ah' - Rsync
 
+    real    1m21.145s
+    user    0m0.230s
+    sys     0m5.172s
+    302M    /Volumes/My Passport/test/3
+    Plain cp command
+
+    real    1m24.065s
+    user    0m0.232s
+    sys     0m5.174s
+    302M    /Volumes/My Passport/test/4
+    cp.go - cp in Go lang
+    2013/06/23 21:04:38 Files copied.
+    cp.go completed
+
+    real    1m27.786s
+    user    0m1.106s
+    sys     0m3.369s
+    302M    /Volumes/My Passport/test/5
+    cp.lua - cp in lua
+
+    real    1m19.340s
+    user    0m1.905s
+    sys     0m3.893s
+    302M    /Volumes/My Passport/test/6
